@@ -18,8 +18,14 @@ function iwp_filter( $all_plugins ) {
 		unset( $all_plugins['iwp-client/init.php'] );
 
 	// Hide ourself
-	if ( isset( $all_plugins['hide_iwp_plugin.php_/hide_iwp_plugin.php'] ) )
-		unset( $all_plugins['hide_iwp_plugin.php_/hide_iwp_plugin.php'] );
+	$fp = explode('wp-content/plugins/', __FILE__);
+	if ( isset( $fp[1] ) ) {
+		$plugin_handle = $fp[1];
+	}
+	if ( isset( $plugin_handle ) && isset( $all_plugins[$plugin_handle] ) ) {
+		unset( $all_plugins[$plugin_handle] );
+	}
+	
 
 	// Return the remaining plugins
 	return $all_plugins;
